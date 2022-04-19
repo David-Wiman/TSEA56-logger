@@ -13,8 +13,11 @@ public:
 	static void init();
 	static void close();
 	
-	static void log(int serverity, std::string origin, std::string type, float value);
+	/* Use by writing 'Logger::log(LEVEL, SOURCE, LABEL, VALUE)',
+	   where LEVEL is  one of [INFO, DEBUG, WARNING, ERROR], SOURCE is the current filename,
+	   LABEL describes the value (e.g. datatype or current method) */
 	static void log(int serverity, std::string origin, std::string type, std::string value);
+	static void log(int serverity, std::string origin, std::string type, float value);
 
 private:
 	Logger() {}
