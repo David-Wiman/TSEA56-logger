@@ -11,6 +11,8 @@ std::fstream Logger::logstream{};
 
 /* Create and open log file, log time */
 void Logger::init() {
+    if (logstream.is_open())
+        logstream.close();
     logstream.open("log/log.txt", std::ios::app);
     if (!logstream.is_open()) {
         throw std::runtime_error("Could not open file");
