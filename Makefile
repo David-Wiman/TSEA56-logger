@@ -8,7 +8,7 @@ CCC = g++
 
 # Compiling flags
 CCFLAGS += -Wno-deprecated-declarations -Wall -Wextra -pedantic -Weffc++ -Wold-style-cast -Woverloaded-virtual -fmax-errors=3 -g
-CCFLAGS += -std=c++17 -MMD
+CCFLAGS += -std=c++17 -MMD -Icommon
 
 # Linking flags
 #LDFLAGS += -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
