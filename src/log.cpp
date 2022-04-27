@@ -18,7 +18,7 @@ void Logger::init() {
         throw std::runtime_error("Could not open file");
     }
     time_t now = time(nullptr);
-    logstream << "\n" << std::put_time(localtime(&now), "%T") << " Log started " << std::endl;
+    logstream << "\n" << std::put_time(localtime(&now), "%T") << ", [INFO], "  << " Log started " << std::endl;
 }
 
 /* Close dsafthe log file upon destruction */
