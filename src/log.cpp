@@ -12,8 +12,6 @@ using namespace std;
 fstream Logger::logstream{};
 fstream Logger::img_proc_logstream{};
 
-//bool om man vill logga i konstruktorn
-
 /* Create and open log file, log time */
 void Logger::init(bool log_img_proc) {
     logstream.open("log/log.txt", ios::app);
@@ -24,18 +22,19 @@ void Logger::init(bool log_img_proc) {
     logstream << "\n" << put_time(localtime(&now), "%T") << " Log started " << endl;
 
     // Log img data
-    img_proc_logstream.open("log/img_proc_log.csv", ios::app);
-    if (!img_proc_logstream) {
-        throw runtime_error("Could not open file");
+    if (log_img_proc) {
+        img_proc_logstream.open("log/img_proc_log.csv", ios::app);
+        if (!img_proc_logstream) {
+            throw runtime_error("Could not open file");
+        }
+        now = time(nullptr);
+        img_proc_logstream << setw(9) << "time,"
+                           << setw(8) << "status,"
+                           << setw(9) << "lat_pos,"
+                           << setw(9) << "angle_l,"
+                           << setw(9) << "angle_r,"
+                           << setw(10) << "stop_dist" << endl;
     }
-    now = time(nullptr);
-    img_proc_logstream << setw(9) << "time,"
-                       << setw(8) << "status,"
-                       << setw(9) << "lat_pos,"
-                       << setw(9) << "angle_l,"
-                       << setw(9) << "angle_r,"
-                       << setw(10) << "stop_dist" << endl;
-    // img_proc_logstream << "\n" << put_time(localtime(&now), "%T") << " Log started " << endl;
 }
 
 /* Close dsafthe log file upon destruction */
