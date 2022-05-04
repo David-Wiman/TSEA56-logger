@@ -12,8 +12,6 @@ using namespace std;
 fstream Logger::logstream{};
 fstream Logger::img_proc_logstream{};
 
-//bool om man vill logga i konstruktorn
-
 /* Create and open log file, log time */
 void Logger::init(bool log_img_proc) {
     logstream.open("log/log.txt", ios::app);
@@ -24,12 +22,19 @@ void Logger::init(bool log_img_proc) {
     logstream << "\n" << put_time(localtime(&now), "%T") << " Log started " << endl;
 
     // Log img data
-    img_proc_logstream.open("log/img_proc_log.csv", ios::app);
-    if (!img_proc_logstream) {
-        throw runtime_error("Could not open file");
+    if (log_img_proc) {
+        img_proc_logstream.open("log/img_proc_log.csv", ios::app);
+        if (!img_proc_logstream) {
+            throw runtime_error("Could not open file");
+        }
+        now = time(nullptr);
+        img_proc_logstream << setw(9) << "time,"
+                           << setw(8) << "status,"
+                           << setw(9) << "lat_pos,"
+                           << setw(9) << "angle_l,"
+                           << setw(9) << "angle_r,"
+                           << setw(10) << "stop_dist" << endl;
     }
-    now = time(nullptr);
-    img_proc_logstream << "lat_pos , angle_l , angle_r , stop_dist" << endl;
 }
 
 /* Close dsafthe log file upon destruction */
@@ -50,6 +55,10 @@ void Logger::log(int severity, string origin, string type, string value) {
 
 void Logger::log_img_data(image_proc_t data) {
     time_t now = time(nullptr) ;
-    img_proc_logstream << "  " << data.lateral_position <<"   ,    " << data.angle_left
-                        <<"    ,    " << data.angle_right <<"    ,    " << data.stop_distance << endl;
+    img_proc_logstream << put_time(localtime(&now), "%T") << ","
+                       << setw(7) << data.status_code << ","
+                       << setw(8) << data.lateral_position << ","
+                       << setw(8) << data.angle_left << ","
+                       << setw(8) << data.angle_right << ","
+                       << setw(10) << data.stop_distance << endl;
 }
