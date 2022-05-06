@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <mutex>
+
 #include "raspi_common.h"
 
 enum severity{INFO, DEBUG, WARNING, ERROR};
@@ -25,6 +27,7 @@ private:
     Logger() {}
     static std::fstream logstream;
     static std::fstream img_proc_logstream;
+    static std::mutex mtx;
 
 };
 

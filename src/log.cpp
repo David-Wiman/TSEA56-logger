@@ -11,6 +11,7 @@ using namespace std;
 
 fstream Logger::logstream{};
 fstream Logger::img_proc_logstream{};
+mutex Logger::mtx{};
 
 /* Create and open log file, log time */
 void Logger::init(bool log_img_proc) {
@@ -49,6 +50,7 @@ void Logger::log(int severity, string origin, string type, float value) {
 }
 
 void Logger::log(int severity, string origin, string type, string value) {
+    std::lock_guard<mutex> lk{mtx};
     time_t now = time(nullptr) ;
     logstream << put_time(localtime(&now), "%T") << ", " << EnumStrings[severity] << ", " << origin << ", " << type << ": " << value << endl;
 }
