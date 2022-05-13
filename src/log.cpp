@@ -31,7 +31,8 @@ void Logger::init(bool log_img_proc) {
         now = time(nullptr);
         img_proc_logstream << setw(9) << "time,"
                            << setw(8) << "status,"
-                           << setw(9) << "lat_pos,"
+                           << setw(9) << "lat_l,"
+                           << setw(9) << "lat_r,"
                            << setw(9) << "angle_l,"
                            << setw(9) << "angle_r,"
                            << setw(10) << "stop_dist" << endl;
@@ -59,7 +60,8 @@ void Logger::log_img_data(image_proc_t data) {
     time_t now = time(nullptr) ;
     img_proc_logstream << put_time(localtime(&now), "%T") << ","
                        << setw(7) << data.status_code << ","
-                       << setw(8) << data.lateral_position << ","
+                       << setw(8) << data.lateral_left << ","
+                       << setw(8) << data.lateral_right << ","
                        << setw(8) << data.angle_left << ","
                        << setw(8) << data.angle_right << ","
                        << setw(10) << data.stop_distance << endl;
